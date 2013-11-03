@@ -7,6 +7,8 @@
 
 namespace midgard\introspection\driver;
 
+use ReflectionExtension;
+
 class midgard2 implements driver
 {
     private $schemanames = array();
