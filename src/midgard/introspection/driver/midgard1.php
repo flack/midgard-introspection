@@ -14,6 +14,6 @@ class midgard1 extends midgard2
      */
     public function get_all_schemanames()
     {
-        return $_MIDGARD['schema']['types'];
+        return array_keys($_MIDGARD['schema']['types']);
     }
 }
