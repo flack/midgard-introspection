@@ -86,14 +86,15 @@ class portable implements driver
             return $properties;
         }
         $cm = connection::get_em()->getClassMetadata($schemaname);
-        $properties = array_merge($properties, $cm->getFieldNames(), $cm->getAssociationNames(), array_keys($cm->midgard['field_aliases']));
-        $properties = array_filter($properties, function($input) use ($metadata)
+        $mgdschema_properties = array_merge($cm->getFieldNames(), $cm->getAssociationNames(), array_keys($cm->midgard['field_aliases']));
+        $mgdschema_properties = array_filter($mgdschema_properties, function($input) use ($metadata)
         {
             if (strpos($input, 'metadata_') === $metadata)
             {
                 return $input;
             }
         });
+        $properties = array_merge($mgdschema_properties, $properties);
         if (!$metadata)
         {
             $properties[] = 'metadata';
