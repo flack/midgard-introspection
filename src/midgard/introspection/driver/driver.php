@@ -40,4 +40,13 @@ interface driver
      * @return boolean Indicating existence
      */
     public function property_exists($schemaname, $property);
+
+    /**
+     * Wrapped print_r call (mainly because print_r tends to choke on doctrine entities)
+     *
+     * @param mixed $object Object to dump
+     * @param boolean $return set to true to return the output instead of printing directly
+     * @return string|void Depending on $return value
+     */
+    public function print_r($object, $return = false);
 }

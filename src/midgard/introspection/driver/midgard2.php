@@ -66,6 +66,9 @@ class midgard2 implements driver
         return array_keys(get_object_vars($schemaname));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function property_exists($schemaname, $property)
     {
         // Workaround for http://trac.midgard-project.org/ticket/942
@@ -74,5 +77,20 @@ class midgard2 implements driver
             $schemaname = new $schemaname();
         }
         return property_exists($schemaname, $property);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function print_r($object, $return = false)
+    {
+        if ($return)
+        {
+            return print_r($object, true);
+        }
+        else
+        {
+            print_r($object);
+        }
     }
 }

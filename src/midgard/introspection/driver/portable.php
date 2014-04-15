@@ -8,6 +8,7 @@
 namespace midgard\introspection\driver;
 
 use midgard\portable\storage\connection;
+use Doctrine\Common\Util\Debug;
 
 class portable implements driver
 {
@@ -131,5 +132,24 @@ class portable implements driver
         }
         $cm = connection::get_em()->getClassMetadata($schemaname);
         return ($cm->hasField($property) || $cm->hasAssociation($schemaname) || array_key_exists($property, $cm->midgard['field_aliases']));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function print_r($object, $return = false)
+    {
+        if ($return)
+        {
+            ob_start();
+            Debug::dump($object);
+            $dump = ob_get_contents();
+            ob_end_clean();
+            return $dump;
+        }
+        else
+        {
+            Debug::dump($object);
+        }
     }
 }

@@ -41,8 +41,18 @@ class helper
         return $this->driver->get_all_properties($schemaname);
     }
 
+    public function get_object_vars($object)
+    {
+        return $this->driver->get_object_vars($object);
+    }
+
     public function property_exists($schemaname, $property)
     {
         return $this->driver->property_exists($schemaname, $property);
+    }
+
+    public function print_r($object, $return = false)
+    {
+        return $this->driver->print_r($object, $return);
     }
 }
