@@ -9,6 +9,7 @@ namespace midgard\introspection\driver;
 
 use midgard\portable\storage\connection;
 use Doctrine\Common\Util\Debug;
+use Doctrine\ORM\Mapping\MappingException;
 
 class portable implements driver
 {
@@ -82,11 +83,15 @@ class portable implements driver
                 $schemaname = get_class($schemaname);
             }
         }
-        if (!connection::get_em()->getMetadataFactory()->hasMetadataFor($schemaname))
+        try
+        {
+            $cm = connection::get_em()->getClassMetadata($schemaname);
+        }
+        catch (MappingException $e)
         {
             return $properties;
         }
-        $cm = connection::get_em()->getClassMetadata($schemaname);
+
         $mgdschema_properties = array_merge($cm->getFieldNames(), $cm->getAssociationNames(), array_keys($cm->midgard['field_aliases']));
         $mgdschema_properties = array_filter($mgdschema_properties, function($input) use ($metadata)
         {
