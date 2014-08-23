@@ -16,4 +16,12 @@ class midgard1 extends midgard2
     {
         return array_keys($_MIDGARD['schema']['types']);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function get_dbo()
+    {
+        throw new \Exception('Not implemented yet');
+    }
 }

@@ -7,8 +7,15 @@
 
 namespace midgard\introspection;
 
+use midgard\introspection\driver\driver;
+
 class helper
 {
+    /**
+     * Driver implementation
+     *
+     * @var driver
+     */
     private $driver;
 
     public function __construct()
@@ -31,28 +38,69 @@ class helper
         }
     }
 
+    /**
+     * Get all MgdSchema classnames
+     *
+     * @return array Array of MgdSchema class names
+     */
     public function get_all_schemanames()
     {
         return $this->driver->get_all_schemanames();
     }
 
+    /**
+     * Returns the names of all properties for the given classname/object
+     *
+     * @param mixed $schemaname Object or classname
+     * @return array Property names
+     */
     public function get_all_properties($schemaname)
     {
         return $this->driver->get_all_properties($schemaname);
     }
 
+    /**
+     * Returns all properties of the given class name or object including their values
+     *
+     * @param mixed $object Object or classname
+     * @return array Property => value pairs
+     */
     public function get_object_vars($object)
     {
         return $this->driver->get_object_vars($object);
     }
 
+    /**
+     * Wrapped property_exists call
+     *
+     * @param mixed $schemaname Object or classname
+     * @param string $property The property name
+     * @return boolean Indicating existence
+     */
     public function property_exists($schemaname, $property)
     {
         return $this->driver->property_exists($schemaname, $property);
     }
 
+    /**
+     * Wrapped print_r call (mainly because print_r tends to choke on doctrine entities)
+     *
+     * @param mixed $object Object to dump
+     * @param boolean $return set to true to return the output instead of printing directly
+     * @return string|void Depending on $return value
+     */
     public function print_r($object, $return = false)
     {
         return $this->driver->print_r($object, $return);
+    }
+
+    /**
+     * Get direct PDO connection
+     *
+     * @return \PDO
+     */
+    public function get_dbo()
+    {
+        return $this->driver->get_dbo();
     }
 }

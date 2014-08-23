@@ -10,6 +10,7 @@ namespace midgard\introspection\driver;
 use midgard\portable\storage\connection;
 use Doctrine\Common\Util\Debug;
 use Doctrine\ORM\Mapping\MappingException;
+use PDO;
 
 class portable implements driver
 {
@@ -108,6 +109,9 @@ class portable implements driver
         return $properties;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function property_exists($schemaname, $property)
     {
         if (is_object($schemaname))
@@ -152,9 +156,24 @@ class portable implements driver
             ob_end_clean();
             return $dump;
         }
-        else
+        Debug::dump($object);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function get_dbo()
+    {
+        $pdo = connection::get_em()->getConnection()->getWrappedConnection();
+        if ($pdo instanceof PDO)
         {
-            Debug::dump($object);
+            return $pdo;
         }
+        $midgard = \midgard_connection::get_instance();
+        if (empty($midgard->config))
+        {
+            throw new \RuntimeException('No Midgard2 connection found');
+        }
+        return new PDO('mysql:host=' . $midgard->config->host . ';dbname=' . $midgard->config->database . ';charset=utf8', $midgard->config->dbuser, $midgard->config->dbpass, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
     }
 }

@@ -8,6 +8,9 @@
 namespace midgard\introspection\driver;
 
 use ReflectionExtension;
+use PDO;
+use midgard_connection;
+use MidgardReflectorObject;
 
 class midgard2 implements driver
 {
@@ -28,9 +31,9 @@ class midgard2 implements driver
                 {
                     $name = $refclass->getName();
                     if (   class_exists('\\MidgardReflectorObject')
-                    && (   \MidgardReflectorObject::is_abstract($name)
-                        || \MidgardReflectorObject::is_mixin($name)
-                        || \MidgardReflectorObject::is_interface($name)))
+                    && (   MidgardReflectorObject::is_abstract($name)
+                        || MidgardReflectorObject::is_mixin($name)
+                        || MidgardReflectorObject::is_interface($name)))
                     {
                         continue;
                     }
@@ -88,9 +91,19 @@ class midgard2 implements driver
         {
             return print_r($object, true);
         }
-        else
+        print_r($object);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function get_dbo()
+    {
+        $midgard = midgard_connection::get_instance();
+        if (empty($midgard->config))
         {
-            print_r($object);
+            throw new \RuntimeException('No Midgard2 connection found');
         }
+        return new PDO('mysql:host=' . $midgard->config->host . ';dbname=' . $midgard->config->database . ';charset=utf8', $midgard->config->dbuser, $midgard->config->dbpass, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
     }
 }

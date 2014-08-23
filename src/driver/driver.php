@@ -49,4 +49,11 @@ interface driver
      * @return string|void Depending on $return value
      */
     public function print_r($object, $return = false);
+
+    /**
+     * Get direct PDO connection
+     *
+     * @return \PDO
+     */
+    public function get_dbo();
 }
