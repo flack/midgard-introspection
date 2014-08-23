@@ -20,7 +20,7 @@ class midgard1 extends midgard2
     /**
      * {@inheritDoc}
      */
-    public function get_dbo()
+    public function get_pdo()
     {
         throw new \Exception('Not implemented yet');
     }

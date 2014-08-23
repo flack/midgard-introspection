@@ -97,7 +97,7 @@ class midgard2 implements driver
     /**
      * {@inheritDoc}
      */
-    public function get_dbo()
+    public function get_pdo()
     {
         $midgard = midgard_connection::get_instance();
         if (empty($midgard->config))

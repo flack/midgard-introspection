@@ -7,14 +7,14 @@
 
 namespace midgard\introspection;
 
-use midgard\introspection\driver\driver;
+use midgard\introspection\driver;
 
 class helper
 {
     /**
      * Driver implementation
      *
-     * @var driver
+     * @var driver\driver
      */
     private $driver;
 
@@ -99,8 +99,8 @@ class helper
      *
      * @return \PDO
      */
-    public function get_dbo()
+    public function get_pdo()
     {
-        return $this->driver->get_dbo();
+        return $this->driver->get_pdo();
     }
 }

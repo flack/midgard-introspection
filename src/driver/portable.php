@@ -162,7 +162,7 @@ class portable implements driver
     /**
      * {@inheritDoc}
      */
-    public function get_dbo()
+    public function get_pdo()
     {
         $pdo = connection::get_em()->getConnection()->getWrappedConnection();
         if ($pdo instanceof PDO)

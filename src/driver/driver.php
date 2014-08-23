@@ -55,5 +55,5 @@ interface driver
      *
      * @return \PDO
      */
-    public function get_dbo();
+    public function get_pdo();
 }
