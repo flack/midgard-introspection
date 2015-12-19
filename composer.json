@@ -2,7 +2,7 @@
     "name": "openpsa/midgard-introspection",
     "description": "Reflection compatibility helper for different Midgard backends",
     "keywords": ["midgard", "reflection"],
-    "license": "LGPL",
+    "license": "LGPL-2.1",
     "authors": [
         {
             "name": "Andreas Flack",
